@@ -1,0 +1,1914 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grand Nusantara Hotel</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --panel: #111827;
+      --panel-2: #1f2937;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #38bdf8;
+      --green: #22c55e;
+      --yellow: #facc15;
+      --red: #ef4444;
+      --cyan: #22d3ee;
+      --shadow: rgba(0,0,0,.25);
+      --border: rgba(255,255,255,.07);
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(180deg, #0b1220 0%, #111827 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      padding: 20px;
+    }
+
+    #app {
+      width: min(1500px, 100%);
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 90vh;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 16px 40px var(--shadow);
+      background: rgba(17, 24, 39, 0.96);
+      border: 1px solid var(--border);
+    }
+
+    .sidebar {
+      background: #0b1120;
+      border-right: 1px solid var(--border);
+      padding: 18px 14px;
+    }
+
+    .brand {
+      font-size: 1.3rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-align: center;
+      color: #f8fafc;
+      letter-spacing: .4px;
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .menu button {
+      background: rgba(255,255,255,.03);
+      color: var(--text);
+      border: 1px solid transparent;
+      padding: 12px 14px;
+      border-radius: 10px;
+      text-align: left;
+      cursor: pointer;
+      font-size: 0.97rem;
+      transition: .2s ease;
+    }
+
+    .menu button:hover {
+      background: rgba(56,189,248,.12);
+      border-color: rgba(56,189,248,.4);
+    }
+
+    .menu button.active {
+      background: rgba(56,189,248,.15);
+      border-color: rgba(56,189,248,.45);
+    }
+
+    .main {
+      padding: 20px;
+      background: rgba(15, 23, 42, 0.85);
+    }
+
+    .status-bar {
+      margin-bottom: 20px;
+      padding: 12px 16px;
+      border-radius: 10px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      min-height: 55px;
+    }
+
+    .screen {
+      background: rgba(17, 24, 39, 0.6);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      min-height: 630px;
+    }
+
+    h1, h2, h3 {
+      margin: 0 0 10px;
+    }
+
+    .header-box {
+      background: linear-gradient(90deg, rgba(56,189,248,.18), rgba(15,23,42,.1));
+      border: 1px solid rgba(56,189,248,.22);
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      color: #dbeafe;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .card {
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+    }
+
+    .card .label {
+      color: var(--muted);
+      font-size: 0.8rem;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .card .value {
+      font-weight: bold;
+      font-size: 1.4rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    label {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      font-size: 0.92rem;
+      color: #d1d5db;
+    }
+
+    input, select, button, textarea {
+      font: inherit;
+    }
+
+    input, select, textarea {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 10px 12px;
+      outline: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: rgba(56, 189, 248, 0.9);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.12);
+    }
+
+    .btn {
+      background: linear-gradient(180deg, #0ea5e9, #0284c7);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      padding: 11px 16px;
+      font-weight: bold;
+      transition: transform .15s ease;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+    .btn.secondary {
+      background: linear-gradient(180deg, #4b5563, #374151);
+    }
+    .btn.success {
+      background: linear-gradient(180deg, #22c55e, #16a34a);
+    }
+    .btn.warn {
+      background: linear-gradient(180deg, #facc15, #eab308);
+      color: #111827;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .table th, .table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .table th {
+      background: rgba(255,255,255,.03);
+      color: #dbeafe;
+    }
+
+    .table tr:last-child td { border-bottom: none; }
+    .room-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .room-item {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.025);
+      border-radius: 12px;
+      padding: 12px;
+      min-height: 110px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .room-item .room-number {
+      font-size: 1.05rem;
+      font-weight: bold;
+    }
+
+    .status-chip {
+      display: inline-block;
+      padding: 5px 8px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      border: 1px solid rgba(255,255,255,.1);
+      width: fit-content;
+      font-weight: bold;
+    }
+
+    .color-green { background: rgba(34,197,94,.18); color: #bbf7d0; border-color: rgba(34,197,94,.4); }
+    .color-yellow { background: rgba(250,204,21,.18); color: #fef3c7; border-color: rgba(250,204,21,.4); }
+    .color-red { background: rgba(239,68,68,.18); color: #fecaca; border-color: rgba(239,68,68,.4); }
+    .color-cyan { background: rgba(34,211,238,.16); color: #cffafe; border-color: rgba(34,211,238,.4); }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 16px 0;
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.03);
+    }
+
+    .dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .muted { color: var(--muted); }
+    .danger { color: #fca5a5; }
+    .success { color: #86efac; }
+    .info { color: #7dd3fc; }
+
+    .invoice-box {
+      background: #f8fafc;
+      color: #111827;
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-top: 18px;
+      border: 1px solid rgba(15,23,42,.1);
+    }
+
+    .invoice-box table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .invoice-box th, .invoice-box td {
+      padding: 7px 0;
+      border-bottom: 1px dashed rgba(15,23,42,.25);
+    }
+
+    .invoice-box .total {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .small {
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 980px) {
+      #app { grid-template-columns: 1fr; }
+      .sidebar { border-right: none; border-bottom: 1px solid var(--border); }
+      .main { padding-top: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <aside class="sidebar">
+      <div class="brand">Grand Nusantara</div>
+      <nav class="menu" id="menu"></nav>
+    </aside>
+
+    <main class="main">
+      <div id="statusBar" class="status-bar"></div>
+      <div id="screen" class="screen"></div>
+    </main>
+  </div>
+
+  <script>
+    const HotelConfig = {
+      HOTEL_NAME: "Grand Nusantara Hotel",
+      TOTAL_FLOORS: 5,
+      MIN_ROOMS_PER_FLOOR: 10,
+      MAX_ROOMS_PER_FLOOR: 20,
+      CHECKIN_HOUR: 14,
+      CHECKOUT_HOUR: 12,
+      TAX_RATE: 0.10,
+      SERVICE_CHARGE_RATE: 0.05,
+      LATE_CHECKOUT_PENALTY_PER_HOUR: 50000,
+      CLEANING_DURATION_MINUTES: 30,
+      BASE_PRICE: {
+        Standard: 350000,
+        Superior: 500000,
+        Deluxe: 750000,
+        Suite: 1200000
+      }
+    };
+
+    const RoomType = {
+      STANDARD: "Standard",
+      SUPERIOR: "Superior",
+      DELUXE: "Deluxe",
+      SUITE: "Suite"
+    };
+
+    const BedType = {
+      TWIN: "Twin",
+      DOUBLE: "Double",
+      QUEEN: "Queen"
+    };
+
+    const RoomStatus = {
+      AVAILABLE: "Available",
+      BOOKED: "Booked",
+      OCCUPIED: "Occupied",
+      CLEANING: "Cleaning",
+      MAINTENANCE: "Maintenance"
+    };
+
+    const ReservationStatus = {
+      BOOKED: "Booked",
+      CHECKED_IN: "Checked-In",
+      CHECKED_OUT: "Checked-Out",
+      CANCELLED: "Cancelled"
+    };
+
+    const PaymentMethod = {
+      CASH: "Cash",
+      DEBIT: "Debit Card",
+      CREDIT: "Credit Card",
+      QRIS: "QRIS",
+      TRANSFER: "Bank Transfer"
+    };
+
+    const PaymentStatus = {
+      PENDING: "Pending",
+      PAID: "Paid",
+      REFUNDED: "Refunded"
+    };
+
+    const StaffRole = {
+      RECEPTIONIST: "Receptionist",
+      MANAGER: "Manager",
+      ADMIN: "Admin"
+    };
+
+    const Utility = {
+      INDO_MONTHS: {
+        1: "Januari", 2: "Februari", 3: "Maret", 4: "April",
+        5: "Mei", 6: "Juni", 7: "Juli", 8: "Agustus",
+        9: "September", 10: "Oktober", 11: "November", 12: "Desember"
+      },
+      INDO_MONTHS_REVERSE: {},
+      TIME_FORMAT: "%H:%M",
+      now() {
+        return new Date();
+      },
+      initReverse() {
+        Object.keys(this.INDO_MONTHS).forEach(k => {
+          this.INDO_MONTHS_REVERSE[this.INDO_MONTHS[k].toLowerCase()] = Number(k);
+        });
+      },
+      parseDate(text) {
+        if (!text) throw new Error("Tanggal kosong.");
+        const s = String(text).trim();
+        const parts = s.split(/\s+/);
+
+        if (parts.length !== 3) {
+          throw new Error("Format tanggal harus: tanggal bulan tahun (contoh: 18 Juli 2026)");
+        }
+        const [dayStr, monthStr, yearStr] = parts;
+        if (!/^\d+$/.test(dayStr) || !/^\d+$/.test(yearStr)) {
+          throw new Error("Tanggal dan tahun harus berupa angka.");
+        }
+        const monthKey = monthStr.toLowerCase();
+        if (!this.INDO_MONTHS_REVERSE[monthKey]) {
+          throw new Error("Nama bulan tidak dikenali. Gunakan nama bulan berbahasa Indonesia.");
+        }
+        const date = new Date(Number(yearStr), Number(this.INDO_MONTHS_REVERSE[monthKey]) - 1, Number(dayStr));
+        if (date.getFullYear() !== Number(yearStr) || date.getMonth() !== Number(this.INDO_MONTHS_REVERSE[monthKey]) - 1 || date.getDate() !== Number(dayStr)) {
+          throw new Error("Tanggal tidak valid.");
+        }
+        return date;
+      },
+      toDateInputValue(dateObj) {
+        const d = new Date(dateObj);
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, "0");
+        const day = String(d.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+      },
+      formatDate(dateObj) {
+        const d = dateObj instanceof Date ? dateObj : new Date(dateObj);
+        return `${d.getDate()} ${this.INDO_MONTHS[d.getMonth() + 1]} ${d.getFullYear()}`;
+      },
+      formatDateTime(dateObj) {
+        const d = dateObj instanceof Date ? dateObj : new Date(dateObj);
+        return `${this.formatDate(d)} pukul ${d.toTimeString().slice(0,5)}`;
+      },
+      formatRupiah(amount) {
+        const n = Number(amount) || 0;
+        return `Rp ${n.toLocaleString("id-ID", { maximumFractionDigits: 0 })}`;
+      },
+      nightsBetween(checkin, checkout) {
+        const start = new Date(checkin);
+        const end = new Date(checkout);
+        const diffMs = end - start;
+        return Math.max(Math.round(diffMs / (1000 * 60 * 60 * 24)), 1);
+      },
+      isValidEmail(value) {
+        const s = String(value || "").trim();
+        if (!s.includes("@")) return false;
+        const [local, domain] = s.split("@");
+        if (!local || !domain || !domain.includes(".")) return false;
+        const ext = domain.split(".").pop();
+        return ext.length >= 2;
+      },
+      isFutureOrToday(date) {
+        const d = new Date(date);
+        const today = new Date();
+        d.setHours(0, 0, 0, 0);
+        today.setHours(0, 0, 0, 0);
+        return d >= today;
+      },
+      isCheckoutAfterCheckin(checkin, checkout) {
+        return new Date(checkout) > new Date(checkin);
+      }
+    };
+
+    Utility.initReverse();
+
+    function randomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function randomChoice(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    function generateId(prefix, length = 6) {
+      const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+      let result = "";
+      for (let i = 0; i < length; i++) result += alphabet[Math.floor(Math.random() * alphabet.length)];
+      return `${prefix}-${result}`;
+    }
+
+    class Guest {
+      constructor(name, email) {
+        this.guest_id = generateId("GST");
+        this.name = name;
+        this.email = email;
+        this.created_at = Utility.now();
+      }
+      toString() {
+        return `${this.name} (${this.guest_id})`;
+      }
+    }
+
+    class GuestManager {
+      constructor() {
+        this.guests = {};
+      }
+      registerGuest(name, email) {
+        const found = this.findByEmail(email);
+        if (found) return found;
+        const guest = new Guest(name, email);
+        this.guests[guest.guest_id] = guest;
+        return guest;
+      }
+      findByEmail(email) {
+        const lower = String(email).trim().toLowerCase();
+        return Object.values(this.guests).find(g => g.email.toLowerCase() === lower) || null;
+      }
+      findById(id) {
+        return this.guests[id] || null;
+      }
+      listGuests() {
+        return Object.values(this.guests);
+      }
+    }
+
+    class Room {
+      constructor(room_number, floor, room_type, bed_type) {
+        this.room_number = room_number;
+        this.floor = floor;
+        this.room_type = room_type;
+        this.bed_type = bed_type;
+        this.status = RoomStatus.AVAILABLE;
+        this.price = HotelConfig.BASE_PRICE[room_type];
+        this.cleaning_started_at = null;
+      }
+
+      setStatus(status) {
+        this.status = status;
+        if (status !== RoomStatus.CLEANING) {
+          this.cleaning_started_at = null;
+        }
+      }
+
+      startCleaning() {
+        this.status = RoomStatus.CLEANING;
+        this.cleaning_started_at = Utility.now();
+      }
+
+      tryAutoAvailable() {
+        if (this.status === RoomStatus.CLEANING && this.cleaning_started_at) {
+          const elapsedMinutes = (Utility.now() - this.cleaning_started_at) / 60000;
+          if (elapsedMinutes >= HotelConfig.CLEANING_DURATION_MINUTES) {
+            this.status = RoomStatus.AVAILABLE;
+            this.cleaning_started_at = null;
+            return true;
+          }
+        }
+        return false;
+      }
+    }
+
+    class Hotel {
+      constructor(name = HotelConfig.HOTEL_NAME) {
+        this.name = name;
+        this.rooms = {};
+        this._generateRooms();
+      }
+
+      _generateRooms() {
+        const roomTypes = Object.values(RoomType);
+        const bedTypes = Object.values(BedType);
+        for (let floor = 1; floor <= HotelConfig.TOTAL_FLOORS; floor++) {
+          const roomCount = randomInt(HotelConfig.MIN_ROOMS_PER_FLOOR, HotelConfig.MAX_ROOMS_PER_FLOOR);
+          for (let i = 1; i <= roomCount; i++) {
+            const roomNumber = `${floor}${String(i).padStart(2, "0")}`;
+            const roomType = randomChoice(roomTypes);
+            const bedType = randomChoice(bedTypes);
+            this.rooms[roomNumber] = new Room(roomNumber, floor, roomType, bedType);
+          }
+        }
+      }
+
+      getRoom(roomNumber) {
+        return this.rooms[roomNumber] || null;
+      }
+
+      getAllRooms() {
+        return Object.values(this.rooms);
+      }
+
+      getRoomsByFloor(floor) {
+        return this.getAllRooms().filter(r => r.floor === floor).sort((a,b) => a.room_number.localeCompare(b.room_number));
+      }
+
+      getAvailableRooms() {
+        return this.getAllRooms().filter(r => r.status === RoomStatus.AVAILABLE);
+      }
+
+      totalRooms() {
+        return this.getAllRooms().length;
+      }
+
+      refreshRoomsStatus() {
+        const updated = [];
+        for (const room of this.getAllRooms()) {
+          if (room.tryAutoAvailable()) updated.push(room.room_number);
+        }
+        return updated;
+      }
+    }
+
+    class CalendarManager {
+      constructor() {
+        this.bookings = {};
+      }
+
+      static overlaps(start1, end1, start2, end2) {
+        return start1 < end2 && start2 < end1;
+      }
+
+      isRoomAvailable(roomNumber, checkin, checkout) {
+        const list = this.bookings[roomNumber] || [];
+        for (const [bIn, bOut] of list) {
+          if (CalendarManager.overlaps(checkin, checkout, bIn, bOut)) {
+            return false;
+          }
+        }
+        return true;
+      }
+
+      addBooking(roomNumber, checkin, checkout, reservationId) {
+        if (!this.bookings[roomNumber]) this.bookings[roomNumber] = [];
+        this.bookings[roomNumber].push([new Date(checkin), new Date(checkout), reservationId]);
+      }
+
+      removeBooking(roomNumber, reservationId) {
+        if (!this.bookings[roomNumber]) return;
+        this.bookings[roomNumber] = this.bookings[roomNumber].filter(([, , rid]) => rid !== reservationId);
+      }
+
+      getRoomSchedule(roomNumber) {
+        return this.bookings[roomNumber] || [];
+      }
+    }
+
+    class Reservation {
+      constructor(guest, room, checkin_date, checkout_date, reservation_id = null) {
+        this.reservation_id = reservation_id || generateId("RSV");
+        this.guest = guest;
+        this.room = room;
+        this.checkin_date = new Date(checkin_date);
+        this.checkout_date = new Date(checkout_date);
+        this.nights = Math.max(Utility.nightsBetween(this.checkin_date, this.checkout_date), 1);
+        this.status = ReservationStatus.BOOKED;
+        this.created_at = Utility.now();
+        this.actual_checkin_time = null;
+        this.actual_checkout_time = null;
+        this.is_walkin = false;
+        this.is_paid = false;
+      }
+
+      mark_checked_in() {
+        this.status = ReservationStatus.CHECKED_IN;
+        this.actual_checkin_time = Utility.now();
+      }
+
+      mark_checked_out() {
+        this.status = ReservationStatus.CHECKED_OUT;
+        this.actual_checkout_time = Utility.now();
+      }
+
+      mark_cancelled() {
+        this.status = ReservationStatus.CANCELLED;
+      }
+
+      mark_paid() {
+        this.is_paid = true;
+      }
+
+      toString() {
+        return `[${this.reservation_id}] ${this.guest.name} - Kamar ${this.room.room_number} (${Utility.formatDate(this.checkin_date)} s/d ${Utility.formatDate(this.checkout_date)}) - ${this.status}`;
+      }
+    }
+
+    class Notification {
+      constructor(message) {
+        this.message = message;
+        this.timestamp = Utility.now();
+      }
+      toString() {
+        return `[${Utility.formatDateTime(this.timestamp)}] ${this.message}`;
+      }
+    }
+
+    class NotificationManager {
+      constructor() {
+        this.notifications = [];
+      }
+
+      notify(message, silent = false) {
+        const note = new Notification(message);
+        this.notifications.push(note);
+        if (!silent) {
+          state.statusText = message;
+        }
+        return note;
+      }
+
+      getAll() {
+        return this.notifications;
+      }
+    }
+
+    class HistoryEntry {
+      constructor(category, description) {
+        this.category = category;
+        this.description = description;
+        this.timestamp = Utility.now();
+      }
+
+      toString() {
+        return `[${Utility.formatDateTime(this.timestamp)}] (${this.category}) ${this.description}`;
+      }
+    }
+
+    class HistoryManager {
+      constructor() {
+        this.entries = [];
+      }
+
+      log(category, description) {
+        this.entries.push(new HistoryEntry(category, description));
+      }
+
+      getAll() {
+        return this.entries;
+      }
+    }
+
+    class ReservationManager {
+      constructor(hotel, calendar_manager, notification_manager, history_manager) {
+        this.hotel = hotel;
+        this.calendar_manager = calendar_manager;
+        this.notification_manager = notification_manager;
+        this.history_manager = history_manager;
+        this.reservations = {};
+      }
+
+      getReservation(id) {
+        return this.reservations[String(id).trim().toUpperCase()] || null;
+      }
+
+      checkAvailability(roomNumber, checkin, checkout) {
+        const room = this.hotel.getRoom(roomNumber);
+        if (!room) return { ok: false, msg: "Kamar tidak ditemukan." };
+        if (room.status === RoomStatus.MAINTENANCE) return { ok: false, msg: "Kamar sedang dalam perbaikan (maintenance)." };
+        if (!this.calendar_manager.isRoomAvailable(roomNumber, new Date(checkin), new Date(checkout))) {
+          return { ok: false, msg: "Kamar sudah dipesan pada rentang tanggal tersebut." };
+        }
+        return { ok: true, msg: "Kamar tersedia." };
+      }
+
+      createBooking(guest, roomNumber, checkin, checkout) {
+        const upstream = this.checkAvailability(roomNumber, checkin, checkout);
+        if (!upstream.ok) return { reservation: null, msg: upstream.msg };
+
+        const room = this.hotel.getRoom(roomNumber);
+        const reservation = new Reservation(guest, room, checkin, checkout);
+        this.reservations[reservation.reservation_id] = reservation;
+        this.calendar_manager.addBooking(roomNumber, checkin, checkout, reservation.reservation_id);
+        room.setStatus(RoomStatus.BOOKED);
+        this.notification_manager.notify(`Booking berhasil dibuat untuk ${guest.name}, Reservasi ${reservation.reservation_id}, Kamar ${roomNumber}.`);
+        this.history_manager.log("BOOKING", `${guest.name} memesan kamar ${roomNumber} (${reservation.reservation_id})`);
+        return { reservation, msg: "Booking berhasil." };
+      }
+
+      getActiveReservationForRoom(roomNumber) {
+        return Object.values(this.reservations).find(res =>
+          res.room.room_number === roomNumber &&
+          [ReservationStatus.BOOKED, ReservationStatus.CHECKED_IN].includes(res.status)
+        ) || null;
+      }
+
+      cancelReservation(reservationId) {
+        const reservation = this.getReservation(reservationId);
+        if (!reservation) return { ok: false, msg: "Reservasi tidak ditemukan." };
+        if (reservation.status !== ReservationStatus.BOOKED) return { ok: false, msg: "Hanya reservasi berstatus Booked yang dapat dibatalkan." };
+        reservation.mark_cancelled();
+        reservation.room.setStatus(RoomStatus.AVAILABLE);
+        this.calendar_manager.removeBooking(reservation.room.room_number, reservation.reservation_id);
+        this.history_manager.log("CANCEL", `Reservasi ${reservation.reservation_id} dibatalkan.`);
+        return { ok: true, msg: "Reservasi berhasil dibatalkan." };
+      }
+
+      listActiveReservations() {
+        return Object.values(this.reservations).filter(r => [ReservationStatus.BOOKED, ReservationStatus.CHECKED_IN].includes(r.status));
+      }
+
+      listAllReservations() {
+        return Object.values(this.reservations);
+      }
+    }
+
+    class CheckInManager {
+      constructor(hotel, notification_manager, history_manager) {
+        this.hotel = hotel;
+        this.notification_manager = notification_manager;
+        this.history_manager = history_manager;
+      }
+
+      checkinWithReservation(reservation_manager, reservation_id) {
+        const res = reservation_manager.getReservation(reservation_id);
+        if (!res) return { reservation: null, msg: "Reservasi tidak ditemukan." };
+        if (res.status !== ReservationStatus.BOOKED) return { reservation: null, msg: `Reservasi berstatus ${res.status}, tidak dapat check-in.` };
+
+        res.mark_checked_in();
+        res.room.setStatus(RoomStatus.OCCUPIED);
+        this.notification_manager.notify(`Check-in berhasil: ${res.guest.name} - Kamar ${res.room.room_number}.`);
+        this.history_manager.log("CHECK-IN", `${res.guest.name} check-in kamar ${res.room.room_number} (${res.reservation_id})`);
+        return { reservation: res, msg: "Check-in berhasil." };
+      }
+
+      checkinWalkin(reservation_manager, guest, roomNumber, checkout_date) {
+        const checkin_date = new Date();
+        const availability = reservation_manager.checkAvailability(roomNumber, checkin_date, checkout_date);
+        if (!availability.ok) return { reservation: null, msg: availability.msg };
+
+        const room = this.hotel.getRoom(roomNumber);
+        const reservation = new Reservation(guest, room, checkin_date, checkout_date);
+        reservation.is_walkin = true;
+        reservation_manager.reservations[reservation.reservation_id] = reservation;
+        reservation_manager.calendar_manager.addBooking(roomNumber, checkin_date, checkout_date, reservation.reservation_id);
+        reservation.mark_checked_in();
+        room.setStatus(RoomStatus.OCCUPIED);
+
+        this.notification_manager.notify(`Check-in langsung (walk-in) berhasil: ${guest.name} - Kamar ${roomNumber}.`);
+        this.history_manager.log("WALK-IN", `${guest.name} walk-in check-in kamar ${roomNumber} (${reservation.reservation_id})`);
+        return { reservation, msg: "Check-in langsung berhasil." };
+      }
+    }
+
+    class CheckOutManager {
+      constructor(notification_manager, history_manager) {
+        this.notification_manager = notification_manager;
+        this.history_manager = history_manager;
+      }
+
+      static calculateLateHours(checkout_time) {
+        const standard = new Date(checkout_time);
+        standard.setHours(HotelConfig.CHECKOUT_HOUR, 0, 0, 0);
+        if (checkout_time <= standard) return 0;
+        const diffMs = checkout_time - standard;
+        return diffMs / (1000 * 60 * 60);
+      }
+
+      processCheckout(reservation) {
+        if (reservation.status !== ReservationStatus.CHECKED_IN) {
+          return { late_hours: null, msg: `Reservasi berstatus ${reservation.status}, tidak dapat check-out.` };
+        }
+
+        const now = Utility.now();
+        const lateHours = this.constructor.calculateLateHours(now);
+        reservation.mark_checked_out();
+        reservation.room.startCleaning();
+
+        this.notification_manager.notify(`Check-out berhasil: ${reservation.guest.name} - Kamar ${reservation.room.room_number}. Kamar kini dalam proses pembersihan (Cleaning).`);
+        this.history_manager.log("CHECK-OUT", `${reservation.guest.name} check-out kamar ${reservation.room.room_number} (${reservation.reservation_id})`);
+        return { late_hours: lateHours, msg: "Check-out berhasil." };
+      }
+    }
+
+    class Payment {
+      constructor(reservation, amount, method) {
+        this.payment_id = generateId("PAY");
+        this.reservation = reservation;
+        this.amount = amount;
+        this.method = method;
+        this.status = PaymentStatus.PENDING;
+        this.timestamp = Utility.now();
+      }
+
+      mark_paid() { this.status = PaymentStatus.PAID; }
+      mark_refunded() { this.status = PaymentStatus.REFUNDED; }
+    }
+
+    class PaymentManager {
+      constructor(notification_manager, history_manager) {
+        this.notification_manager = notification_manager;
+        this.history_manager = history_manager;
+        this.payments = {};
+      }
+
+      processPayment(reservation, amount, method) {
+        const payment = new Payment(reservation, amount, method);
+        payment.mark_paid();
+        this.payments[payment.payment_id] = payment;
+        this.notification_manager.notify(`Pembayaran diterima: ${Utility.formatRupiah(amount)} dari ${reservation.guest.name} via ${method}.`);
+        this.history_manager.log("PAYMENT", `${reservation.guest.name} membayar ${Utility.formatRupiah(amount)} via ${method}`);
+        reservation.is_paid = true;
+        return payment;
+      }
+
+      totalRevenue() {
+        return Object.values(this.payments)
+          .filter(p => p.status === PaymentStatus.PAID)
+          .reduce((sum, p) => sum + Number(p.amount || 0), 0);
+      }
+    }
+
+    class Invoice {
+      constructor(reservation, payment, price_breakdown) {
+        this.invoice_id = generateId("INV");
+        this.reservation = reservation;
+        this.payment = payment;
+        this.price_breakdown = price_breakdown;
+        this.issued_at = Utility.now();
+      }
+
+      toHTML() {
+        const pb = this.price_breakdown;
+        return `
+          <div class="invoice-box">
+            <h2 style="margin:0 0 12px; text-align:center;">INVOICE - ${HotelConfig.HOTEL_NAME}</h2>
+            <table>
+              <tr><td>No. Invoice</td><td>${this.invoice_id}</td></tr>
+              <tr><td>No. Reservasi</td><td>${this.reservation.reservation_id}</td></tr>
+              <tr><td>Tanggal Cetak</td><td>${Utility.formatDateTime(this.issued_at)}</td></tr>
+              <tr><td>Nama Tamu</td><td>${this.reservation.guest.name}</td></tr>
+              <tr><td>Email</td><td>${this.reservation.guest.email}</td></tr>
+              <tr><td>Kamar</td><td>${this.reservation.room.room_number} (${this.reservation.room.room_type}, Kasur ${this.reservation.room.bed_type})</td></tr>
+              <tr><td>Check-In</td><td>${Utility.formatDate(this.reservation.checkin_date)}</td></tr>
+              <tr><td>Check-Out</td><td>${Utility.formatDate(this.reservation.checkout_date)}</td></tr>
+              <tr><td>Jumlah Malam</td><td>${this.reservation.nights}</td></tr>
+            </table>
+            <hr style="margin: 12px 0; border: 1px solid rgba(15,23,42,.15);" />
+            <table>
+              <tr><td>Biaya Kamar</td><td>${Utility.formatRupiah(pb.subtotal)}</td></tr>
+              <tr><td>Pajak (10%)</td><td>${Utility.formatRupiah(pb.tax)}</td></tr>
+              <tr><td>Service Charge (5%)</td><td>${Utility.formatRupiah(pb.service_charge)}</td></tr>
+              ${pb.late_fee > 0 ? `<tr><td>Denda Keterlambatan</td><td>${Utility.formatRupiah(pb.late_fee)}</td></tr>` : ""}
+            </table>
+            <hr style="margin: 12px 0; border: 1px solid rgba(15,23,42,.15);" />
+            <div class="total">TOTAL: ${Utility.formatRupiah(pb.total)}</div>
+            ${this.payment ? `
+              <div style="margin-top:10px;">Metode Bayar: ${this.payment.method}</div>
+              <div>Status Bayar: ${this.payment.status}</div>
+            ` : `
+              <div style="margin-top:10px;">Status Bayar: Lunas (Prabayar sebelumnya, tanpa denda tambahan)</div>
+            `}
+          </div>
+        `;
+      }
+    }
+
+    class InvoiceManager {
+      constructor() {
+        this.invoices = {};
+      }
+
+      createInvoice(reservation, payment, price_breakdown) {
+        const invoice = new Invoice(reservation, payment, price_breakdown);
+        this.invoices[invoice.invoice_id] = invoice;
+        return invoice;
+      }
+    }
+
+    class Staff {
+      constructor(name, role) {
+        this.staff_id = generateId("STF", 4);
+        this.name = name;
+        this.role = role;
+      }
+      toString() {
+        return `[${this.staff_id}] ${this.name} - ${this.role}`;
+      }
+    }
+
+    class StaffManager {
+      constructor() {
+        this.staff_list = {};
+        this.current_staff = null;
+      }
+
+      addStaff(name, role) {
+        const staff = new Staff(name, role);
+        this.staff_list[staff.staff_id] = staff;
+        if (!this.current_staff) this.current_staff = staff;
+        return staff;
+      }
+
+      setCurrentStaff(staff_id) {
+        const staff = this.staff_list[String(staff_id).trim().toUpperCase()];
+        if (staff) {
+          this.current_staff = staff;
+          return true;
+        }
+        return false;
+      }
+
+      listStaff() {
+        return Object.values(this.staff_list);
+      }
+    }
+
+    class RoomColorHelper {
+      static getStatusColor(room) {
+        if (room.status === RoomStatus.AVAILABLE) return { className: "color-green", label: "Available" };
+        if (room.status === RoomStatus.CLEANING) return { className: "color-cyan", label: "Cleaning (baru Check-Out)" };
+        if (room.status === RoomStatus.MAINTENANCE) return { className: "color-cyan", label: "Maintenance" };
+        if (room.status === RoomStatus.BOOKED) return { className: "color-yellow", label: "Booked (terisi, belum bayar)" };
+        if (room.status === RoomStatus.OCCUPIED) {
+          const active = state.reservation_manager.getActiveReservationForRoom(room.room_number);
+          if (active && active.is_paid) return { className: "color-red", label: "Occupied (terisi, sudah bayar)" };
+          return { className: "color-yellow", label: "Occupied (terisi, belum bayar)" };
+        }
+        return { className: "", label: room.status };
+      }
+    }
+
+    class PriceManager {
+      static getBasePrice(room_type) {
+        return HotelConfig.BASE_PRICE[room_type];
+      }
+
+      static calculateRoomCharge(room_type, nights) {
+        return this.getBasePrice(room_type) * nights;
+      }
+
+      static calculateTax(subtotal) {
+        return subtotal * HotelConfig.TAX_RATE;
+      }
+
+      static calculateServiceCharge(subtotal) {
+        return subtotal * HotelConfig.SERVICE_CHARGE_RATE;
+      }
+
+      static calculateLateCheckoutFee(hours_late) {
+        if (hours_late <= 0) return 0;
+        return Math.floor(hours_late) * HotelConfig.LATE_CHECKOUT_PENALTY_PER_HOUR;
+      }
+
+      static calculateTotal(room_type, nights, late_hours = 0) {
+        const subtotal = this.calculateRoomCharge(room_type, nights);
+        const tax = this.calculateTax(subtotal);
+        const service_charge = this.calculateServiceCharge(subtotal);
+        const late_fee = this.calculateLateCheckoutFee(late_hours);
+        const total = subtotal + tax + service_charge + late_fee;
+        return { subtotal, tax, service_charge, late_fee, total };
+      }
+    }
+
+    class HotelReport {
+      constructor(hotel, reservation_manager, payment_manager) {
+        this.hotel = hotel;
+        this.reservation_manager = reservation_manager;
+        this.payment_manager = payment_manager;
+      }
+
+      occupancyReport() {
+        const rooms = this.hotel.getAllRooms();
+        const total = rooms.length;
+        const occupied = rooms.filter(r => r.status === RoomStatus.OCCUPIED).length;
+        const booked = rooms.filter(r => r.status === RoomStatus.BOOKED).length;
+        const available = rooms.filter(r => r.status === RoomStatus.AVAILABLE).length;
+        const cleaning = rooms.filter(r => r.status === RoomStatus.CLEANING).length;
+        const maintenance = rooms.filter(r => r.status === RoomStatus.MAINTENANCE).length;
+        const occupancy_rate = total ? (occupied / total) * 100 : 0;
+
+        return { total, occupied, booked, available, cleaning, maintenance, occupancy_rate };
+      }
+
+      renderReport() {
+        const occ = this.occupancyReport();
+        return `
+          <div class="grid">
+            <div class="card"><div class="label">Total Kamar</div><div class="value">${occ.total}</div></div>
+            <div class="card"><div class="label">Tersedia</div><div class="value">${occ.available}</div></div>
+            <div class="card"><div class="label">Dipesan</div><div class="value">${occ.booked}</div></div>
+            <div class="card"><div class="label">Terisi</div><div class="value">${occ.occupied}</div></div>
+            <div class="card"><div class="label">Dibersihkan</div><div class="value">${occ.cleaning}</div></div>
+            <div class="card"><div class="label">Maintenance</div><div class="value">${occ.maintenance}</div></div>
+            <div class="card"><div class="label">Okupansi</div><div class="value">${occ.occupancy_rate.toFixed(1)}%</div></div>
+            <div class="card"><div class="label">Pendapatan</div><div class="value">${Utility.formatRupiah(this.payment_manager.totalRevenue())}</div></div>
+          </div>
+        `;
+      }
+    }
+
+    const state = {
+      hotel: new Hotel(),
+      calendar_manager: new CalendarManager(),
+      notification_manager: new NotificationManager(),
+      history_manager: new HistoryManager(),
+      guest_manager: new GuestManager(),
+      reservation_manager: null,
+      checkin_manager: null,
+      checkout_manager: null,
+      payment_manager: null,
+      invoice_manager: new InvoiceManager(),
+      staff_manager: new StaffManager(),
+      report: null,
+      currentScreen: "dashboard",
+      statusText: "Sistem siap digunakan.",
+      lastInvoice: null
+    };
+
+    function initSystem() {
+      state.reservation_manager = new ReservationManager(
+        state.hotel, state.calendar_manager, state.notification_manager, state.history_manager
+      );
+      state.checkin_manager = new CheckInManager(state.hotel, state.notification_manager, state.history_manager);
+      state.checkout_manager = new CheckOutManager(state.notification_manager, state.history_manager);
+      state.payment_manager = new PaymentManager(state.notification_manager, state.history_manager);
+      state.report = new HotelReport(state.hotel, state.reservation_manager, state.payment_manager);
+      state.staff_manager.addStaff("Admin Utama", StaffRole.ADMIN);
+      renderMenu();
+      renderScreen();
+      setInterval(() => {
+        const updated = state.hotel.refreshRoomsStatus();
+        if (updated.length) {
+          const list = updated.join(", ");
+          state.notification_manager.notify(`Kamar ${list} selesai dibersihkan, kini kembali berstatus Available.`, true);
+        }
+        renderScreen();
+      }, 15000);
+    }
+
+    function renderMenu() {
+      const menu = document.getElementById("menu");
+      const items = [
+        { id: "dashboard", label: "Dashboard" },
+        { id: "availability", label: "Cek Ketersediaan" },
+        { id: "booking", label: "Booking Kamar" },
+        { id: "checkinReservation", label: "Check-In Reservasi" },
+        { id: "checkinWalkin", label: "Check-In Walk-In" },
+        { id: "checkout", label: "Check-Out" },
+        { id: "prepay", label: "Bayar Sekarang" },
+        { id: "history", label: "Riwayat Transaksi" },
+        { id: "report", label: "Laporan Hotel" },
+        { id: "staff", label: "Kelola Staff" },
+        { id: "floorplan", label: "Denah Kamar" }
+      ];
+
+      menu.innerHTML = items.map(item => `
+        <button class="${state.currentScreen === item.id ? "active" : ""}" data-target="${item.id}">
+          ${item.label}
+        </button>
+      `).join("");
+
+      menu.querySelectorAll("button").forEach(btn => {
+        btn.addEventListener("click", () => {
+          state.currentScreen = btn.dataset.target;
+          renderMenu();
+          renderScreen();
+        });
+      });
+    }
+
+    function getTodayInputValue() {
+      const now = new Date();
+      const y = now.getFullYear();
+      const m = String(now.getMonth() + 1).padStart(2, "0");
+      const d = String(now.getDate()).padStart(2, "0");
+      return `${y}-${m}-${d}`;
+    }
+
+    function renderStatusBar() {
+      const statusBar = document.getElementById("statusBar");
+      statusBar.innerHTML = `<strong>Status:</strong> ${state.statusText}`;
+    }
+
+    function roomColorMarkup(room) {
+      const info = RoomColorHelper.getStatusColor(room);
+      return `<span class="status-chip ${info.className}">${info.label}</span>`;
+    }
+
+    function renderDashboard() {
+      const occ = state.report.occupancyReport();
+      const recent = state.notification_manager.getAll().slice(-5).reverse();
+
+      return `
+        <div class="header-box">
+          <h1>${HotelConfig.HOTEL_NAME}</h1>
+          <div class="muted">Sistem manajemen hotel berbasis web — siap digunakan di browser</div>
+        </div>
+
+        <div class="grid">
+          <div class="card">
+            <div class="label">Total Kamar</div>
+            <div class="value">${occ.total}</div>
+          </div>
+          <div class="card">
+            <div class="label">Tersedia</div>
+            <div class="value">${occ.available}</div>
+          </div>
+          <div class="card">
+            <div class="label">Booked</div>
+            <div class="value">${occ.booked}</div>
+          </div>
+          <div class="card">
+            <div class="label">Occupied</div>
+            <div class="value">${occ.occupied}</div>
+          </div>
+          <div class="card">
+            <div class="label">Pendapatan</div>
+            <div class="value">${Utility.formatRupiah(state.payment_manager.totalRevenue())}</div>
+          </div>
+          <div class="card">
+            <div class="label">Reservasi Aktif</div>
+            <div class="value">${state.reservation_manager.listActiveReservations().length}</div>
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="card" style="grid-column: 1 / -1;">
+            <div class="label">Notifikasi Terbaru</div>
+            ${recent.length ? recent.map(n => `<div class="small" style="margin-top:6px;">${n.toString()}</div>`).join("") : "<div class='small' style='margin-top:6px;'>Belum ada notifikasi.</div>"}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderAvailabilityScreen() {
+      return `
+        <div class="header-box">
+          <h2>Cek Ketersediaan Kamar</h2>
+        </div>
+
+        <form id="availabilityForm">
+          <div class="form-grid">
+            <label>
+              Tanggal Check-In
+              <input type="date" id="checkinDate" value="${getTodayInputValue()}" required />
+            </label>
+            <label>
+              Tanggal Check-Out
+              <input type="date" id="checkoutDate" value="${Utility.toDateInputValue(new Date(Date.now() + 86400000))}" required />
+            </label>
+            <label>
+              Tipe Kamar
+              <select id="roomTypeFilter">
+                <option value="all">Semua Tipe</option>
+                ${Object.values(RoomType).map(v => `<option value="${v}">${v}</option>`).join("")}
+              </select>
+            </label>
+            <label>
+              Tipe Kasur
+              <select id="bedTypeFilter">
+                <option value="all">Semua Tipe Kasur</option>
+                ${Object.values(BedType).map(v => `<option value="${v}">${v}</option>`).join("")}
+              </select>
+            </label>
+          </div>
+          <div class="btn-row">
+            <button class="btn" type="submit">Cari Kamar Tersedia</button>
+          </div>
+        </form>
+
+        <div id="availabilityResult"></div>
+      `;
+    }
+
+    function renderBookingScreen() {
+      return `
+        <div class="header-box">
+          <h2>Booking Kamar</h2>
+        </div>
+
+        <form id="bookingForm">
+          <div class="form-grid">
+            <label>
+              Tanggal Check-In
+              <input type="date" id="bookingCheckin" value="${getTodayInputValue()}" required />
+            </label>
+            <label>
+              Tanggal Check-Out
+              <input type="date" id="bookingCheckout" value="${Utility.toDateInputValue(new Date(Date.now() + 86400000))}" required />
+            </label>
+            <label>
+              Tipe Kamar
+              <select id="bookingRoomType">
+                <option value="all">Semua</option>
+                ${Object.values(RoomType).map(v => `<option value="${v}">${v}</option>`).join("")}
+              </select>
+            </label>
+            <label>
+              Tipe Kasur
+              <select id="bookingBedType">
+                <option value="all">Semua</option>
+                ${Object.values(BedType).map(v => `<option value="${v}">${v}</option>`).join("")}
+              </select>
+            </label>
+            <label>
+              Nama Tamu
+              <input type="text" id="guestName" placeholder="Nama lengkap" required />
+            </label>
+            <label>
+              Email Tamu
+              <input type="email" id="guestEmail" placeholder="contoh@email.com" required />
+            </label>
+          </div>
+          <div class="btn-row">
+            <button class="btn" type="submit">Cari & Booking</button>
+          </div>
+        </form>
+
+        <div id="bookingResult"></div>
+      `;
+    }
+
+    function renderCheckinReservationScreen() {
+      return `
+        <div class="header-box">
+          <h2>Check-In dengan Reservasi</h2>
+        </div>
+        <form id="checkinReservationForm">
+          <div class="form-grid">
+            <label>
+              Reservation ID
+              <input type="text" id="reservationId" placeholder="RSV-XXXXXX" required />
+            </label>
+          </div>
+          <div class="btn-row">
+            <button class="btn" type="submit">Check-In</button>
+          </div>
+        </form>
+      `;
+    }
+
+    function renderCheckinWalkinScreen() {
+      return `
+        <div class="header-box">
+          <h2>Check-In Langsung (Walk-In)</h2>
+        </div>
+
+        <form id="walkinForm">
+          <div class="form-grid">
+            <label>
+              Nama Tamu
+              <input type="text" id="walkinName" required />
+            </label>
+            <label>
+              Email
+              <input type="email" id="walkinEmail" required />
+            </label>
+            <label>
+              Tanggal Check-Out
+              <input type="date" id="walkinCheckout" value="${Utility.toDateInputValue(new Date(Date.now() + 86400000 * 2))}" required />
+            </label>
+          </div>
+          <div class="btn-row">
+            <button class="btn" type="submit">Lanjutkan Pilih Kamar</button>
+          </div>
+        </form>
+
+        <div id="walkinRoomResult"></div>
+      `;
+    }
+
+    function renderCheckoutScreen() {
+      return `
+        <div class="header-box">
+          <h2>Check-Out & Pembayaran</h2>
+        </div>
+
+        <form id="checkoutForm">
+          <div class="form-grid">
+            <label>
+              Reservation ID
+              <input type="text" id="checkoutReservationId" placeholder="RSV-XXXXXX" required />
+            </label>
+          </div>
+          <div class="btn-row">
+            <button class="btn" type="submit">Proses Check-Out</button>
+          </div>
+        </form>
+
+        ${state.lastInvoice ? state.lastInvoice.toHTML() : ""}
+      `;
+    }
+
+    function renderPrepayScreen() {
+      return `
+        <div class="header-box">
+          <h2>Bayar Sekarang (Prabayar)</h2>
+        </div>
+
+        <form id="prepayForm">
+          <div class="form-grid">
+            <label>
+              Reservation ID
+              <input type="text" id="prepayReservationId" placeholder="RSV-XXXXXX" required />
+            </label>
+          </div>
+          <div class="btn-row">
+            <button class="btn" type="submit">Lanjutkan Pembayaran</button>
+          </div>
+        </form>
+      `;
+    }
+
+    function renderHistoryScreen() {
+      const entries = state.history_manager.getAll();
+      return `
+        <div class="header-box">
+          <h2>Riwayat Transaksi</h2>
+        </div>
+
+        ${entries.length ? `
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Waktu</th>
+                <th>Kategori</th>
+                <th>Deskripsi</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${entries.map(e => `
+                <tr>
+                  <td>${Utility.formatDateTime(e.timestamp)}</td>
+                  <td>${e.category}</td>
+                  <td>${e.description}</td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        ` : "<div class='muted'>Belum ada riwayat transaksi.</div>"}
+      `;
+    }
+
+    function renderReportScreen() {
+      return `
+        <div class="header-box">
+          <h2>Laporan Hotel</h2>
+        </div>
+        ${state.report.renderReport()}
+      `;
+    }
+
+    function renderStaffScreen() {
+      return `
+        <div class="header-box">
+          <h2>Kelola Staff</h2>
+        </div>
+        <form id="staffForm">
+          <div class="form-grid">
+            <label>
+              Nama Staff
+              <input type="text" id="staffName" required />
+            </label>
+            <label>
+              Role
+              <select id="staffRole">
+                ${Object.values(StaffRole).map(r => `<option value="${r}">${r}</option>`).join("")}
+              </select>
+            </label>
+          </div>
+          <div class="btn-row">
+            <button class="btn" type="submit">Tambah Staff</button>
+          </div>
+        </form>
+
+        <table class="table">
+          <thead>
+            <tr><th>ID</th><th>Nama</th><th>Role</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            ${state.staff_manager.listStaff().map(s => `
+              <tr>
+                <td>${s.staff_id}</td>
+                <td>${s.name}</td>
+                <td>${s.role}</td>
+                <td>${state.staff_manager.current_staff && state.staff_manager.current_staff.staff_id === s.staff_id ? "Aktif" : ""}</td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      `;
+    }
+
+    function renderFloorPlanScreen() {
+      const floors = [];
+      for (let floor = 1; floor <= HotelConfig.TOTAL_FLOORS; floor++) {
+        const rooms = state.hotel.getRoomsByFloor(floor);
+        floors.push(`
+          <div style="margin-top: 24px;">
+            <h3>Lantai ${floor} (${rooms.length} kamar)</h3>
+            <div class="legend">
+              <div class="legend-item"><span class="dot" style="background: #22c55e;"></span>Available</div>
+              <div class="legend-item"><span class="dot" style="background: #facc15;"></span>Booked / Occupied belum bayar</div>
+              <div class="legend-item"><span class="dot" style="background: #ef4444;"></span>Occupied sudah bayar</div>
+              <div class="legend-item"><span class="dot" style="background: #22d3ee;"></span>Cleaning/Maintenance</div>
+            </div>
+            <div class="room-list">
+              ${rooms.map(room => {
+                const info = RoomColorHelper.getStatusColor(room);
+                return `
+                  <div class="room-item">
+                    <div class="room-number">Kamar ${room.room_number}</div>
+                    <div class="small">${room.room_type} / Kasur ${room.bed_type}</div>
+                    <div class="small">Rp ${room.price.toLocaleString("id-ID")}/malam</div>
+                    <div class="small">${roomColorMarkup(room)}</div>
+                  </div>
+                `;
+              }).join("")}
+            </div>
+          </div>
+        `);
+      }
+
+      return `
+        <div class="header-box">
+          <h2>Denah Kamar per Lantai</h2>
+        </div>
+        ${floors.join("")}
+      `;
+    }
+
+    function renderScreen() {
+      const screen = document.getElementById("screen");
+      let html = "";
+
+      switch (state.currentScreen) {
+        case "dashboard": html = renderDashboard(); break;
+        case "availability": html = renderAvailabilityScreen(); break;
+        case "booking": html = renderBookingScreen(); break;
+        case "checkinReservation": html = renderCheckinReservationScreen(); break;
+        case "checkinWalkin": html = renderCheckinWalkinScreen(); break;
+        case "checkout": html = renderCheckoutScreen(); break;
+        case "prepay": html = renderPrepayScreen(); break;
+        case "history": html = renderHistoryScreen(); break;
+        case "report": html = renderReportScreen(); break;
+        case "staff": html = renderStaffScreen(); break;
+        case "floorplan": html = renderFloorPlanScreen(); break;
+        default: html = renderDashboard();
+      }
+
+      screen.innerHTML = html;
+      bindScreenEvents();
+      renderStatusBar();
+    }
+
+    function bindScreenEvents() {
+      const availabilityForm = document.getElementById("availabilityForm");
+      if (availabilityForm) {
+        availabilityForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const checkin = new Date(document.getElementById("checkinDate").value + "T00:00:00");
+          const checkout = new Date(document.getElementById("checkoutDate").value + "T00:00:00");
+          const typeFilter = document.getElementById("roomTypeFilter").value;
+          const bedFilter = document.getElementById("bedTypeFilter").value;
+
+          if (!Utility.isFutureOrToday(checkin)) {
+            state.statusText = "Tanggal check-in tidak boleh sebelum hari ini.";
+            renderStatusBar();
+            return;
+          }
+          if (!Utility.isCheckoutAfterCheckin(checkin, checkout)) {
+            state.statusText = "Tanggal check-out harus setelah tanggal check-in.";
+            renderStatusBar();
+            return;
+          }
+
+          let rooms = state.hotel.getAllRooms().filter(room => room.status !== RoomStatus.MAINTENANCE && state.calendar_manager.isRoomAvailable(room.room_number, checkin, checkout));
+          if (typeFilter !== "all") rooms = rooms.filter(r => r.room_type === typeFilter);
+          if (bedFilter !== "all") rooms = rooms.filter(r => r.bed_type === bedFilter);
+
+          const result = document.getElementById("availabilityResult");
+          if (!rooms.length) {
+            result.innerHTML = "<div class='muted'>Tidak ada kamar yang tersedia pada rentang tanggal tersebut.</div>";
+            return;
+          }
+
+          result.innerHTML = `
+            <h3 style="margin-top:20px;">Kamar tersedia untuk ${Utility.formatDate(checkin)} s/d ${Utility.formatDate(checkout)}</h3>
+            <div class="legend">
+              <div class="legend-item"><span class="dot" style="background: #22c55e;"></span>Available</div>
+              <div class="legend-item"><span class="dot" style="background: #facc15;"></span>Booked / Occupied belum bayar</div>
+              <div class="legend-item"><span class="dot" style="background: #ef4444;"></span>Occupied sudah bayar</div>
+              <div class="legend-item"><span class="dot" style="background: #22d3ee;"></span>Cleaning / Maintenance</div>
+            </div>
+            <div class="room-list">
+              ${rooms.map(room => `
+                <div class="room-item">
+                  <div class="room-number">Kamar ${room.room_number}</div>
+                  <div class="small">${room.room_type} / Kasur ${room.bed_type}</div>
+                  <div class="small">${Utility.formatRupiah(room.price)}/malam</div>
+                  <div>${roomColorMarkup(room)}</div>
+                </div>
+              `).join("")}
+            </div>
+          `;
+          state.statusText = `${rooms.length} kamar tersedia ditemukan.`;
+          renderStatusBar();
+        });
+      }
+
+      const bookingForm = document.getElementById("bookingForm");
+      if (bookingForm) {
+        bookingForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const checkin = document.getElementById("bookingCheckin").value;
+          const checkout = document.getElementById("bookingCheckout").value;
+          const roomType = document.getElementById("bookingRoomType").value;
+          const bedType = document.getElementById("bookingBedType").value;
+          const name = document.getElementById("guestName").value.trim();
+          const email = document.getElementById("guestEmail").value.trim();
+
+          if (!name || !email || !Utility.isValidEmail(email)) {
+            state.statusText = "Nama dan email tamu harus valid.";
+            renderStatusBar();
+            return;
+          }
+
+          const start = new Date(checkin + "T00:00:00");
+          const end = new Date(checkout + "T00:00:00");
+          if (!Utility.isFutureOrToday(start)) {
+            state.statusText = "Tanggal check-in tidak boleh sebelum hari ini.";
+            renderStatusBar();
+            return;
+          }
+          if (!Utility.isCheckoutAfterCheckin(start, end)) {
+            state.statusText = "Tanggal check-out harus setelah tanggal check-in.";
+            renderStatusBar();
+            return;
+          }
+
+          let rooms = state.hotel.getAllRooms().filter(room =>
+            room.status !== RoomStatus.MAINTENANCE &&
+            state.calendar_manager.isRoomAvailable(room.room_number, start, end)
+          );
+          if (roomType !== "all") rooms = rooms.filter(r => r.room_type === roomType);
+          if (bedType !== "all") rooms = rooms.filter(r => r.bed_type === bedType);
+
+          const result = document.getElementById("bookingResult");
+          if (!rooms.length) {
+            result.innerHTML = "<div class='muted'>Tidak ada kamar yang cocok untuk tanggal dan filter yang dipilih.</div>";
+            return;
+          }
+
+          const room = rooms[0];
+          const guest = state.guest_manager.registerGuest(name, email);
+          const booking = state.reservation_manager.createBooking(guest, room.room_number, start, end);
+
+          if (!booking.reservation) {
+            result.innerHTML = `<div class='danger'>Booking gagal: ${booking.msg}</div>`;
+            state.statusText = `Booking gagal: ${booking.msg}`;
+            renderStatusBar();
+            return;
+          }
+
+          const estimate = PriceManager.calculateTotal(room.room_type, booking.reservation.nights);
+          result.innerHTML = `
+            <div class="card" style="margin-top:18px;">
+              <h3>Booking Berhasil</h3>
+              <div>Reservation ID: <strong>${booking.reservation.reservation_id}</strong></div>
+              <div>Kamar: ${room.room_number} (${room.room_type}, Kasur ${room.bed_type})</div>
+              <div>Check-In: ${Utility.formatDate(start)}</div>
+              <div>Check-Out: ${Utility.formatDate(end)}</div>
+              <div>Estimasi Total: ${Utility.formatRupiah(estimate.total)} (${booking.reservation.nights} malam, belum termasuk denda keterlambatan)</div>
+              <div>Status kamar: Booked (warna kuning / belum bayar)</div>
+            </div>
+          `;
+          state.statusText = `Booking berhasil untuk kamar ${room.room_number}.`;
+          renderStatusBar();
+        });
+      }
+
+      const checkinReservationForm = document.getElementById("checkinReservationForm");
+      if (checkinReservationForm) {
+        checkinReservationForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const reservationId = document.getElementById("reservationId").value.trim().toUpperCase();
+          const now = new Date();
+          if (now.getHours() < HotelConfig.CHECKIN_HOUR) {
+            const proceed = confirm(`Jam check-in standar mulai pukul ${HotelConfig.CHECKIN_HOUR}:00. Sekarang pukul ${now.toTimeString().slice(0,5)}. Tetap lanjutkan check-in?`);
+            if (!proceed) {
+              state.statusText = "Check-in reservasi dibatalkan.";
+              renderStatusBar();
+              return;
+            }
+          }
+
+          const result = state.checkin_manager.checkinWithReservation(state.reservation_manager, reservationId);
+          if (!result.reservation) {
+            state.statusText = `Check-in gagal: ${result.msg}`;
+            renderStatusBar();
+            alert(`Check-in gagal: ${result.msg}`);
+            return;
+          }
+
+          const a = result.reservation;
+          state.statusText = `Check-in berhasil untuk ${a.guest.name}.`;
+          renderStatusBar();
+          alert(`Check-in berhasil!\n${a.toString()}\nWaktu Check-In: ${Utility.formatDateTime(a.actual_checkin_time)}`);
+        });
+      }
+
+      const walkinForm = document.getElementById("walkinForm");
+      if (walkinForm) {
+        walkinForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const name = document.getElementById("walkinName").value.trim();
+          const email = document.getElementById("walkinEmail").value.trim();
+          const checkout = document.getElementById("walkinCheckout").value;
+
+          if (!name || !Utility.isValidEmail(email)) {
+            state.statusText = "Nama dan email walk-in harus valid.";
+            renderStatusBar();
+            alert("Nama dan email walk-in harus valid.");
+            return;
+          }
+          if (new Date() < new Date("2000-01-01T14:00:00")) {
+            // placeholder, tetap aman
+          }
+
+          let available = state.hotel.getAvailableRooms();
+          if (!available.length) {
+            state.statusText = "Tidak ada kamar tersedia saat ini.";
+            renderStatusBar();
+            alert("Tidak ada kamar tersedia saat ini.");
+            return;
+          }
+
+          const room = available[0];
+          const guest = state.guest_manager.registerGuest(name, email);
+          const res = state.checkin_manager.checkinWalkin(state.reservation_manager, guest, room.room_number, new Date(checkout + "T00:00:00"));
+
+          if (!res.reservation) {
+            state.statusText = `Walk-in gagal: ${res.msg}`;
+            renderStatusBar();
+            alert(`Walk-in gagal: ${res.msg}`);
+            return;
+          }
+
+          state.statusText = `Check-in walk-in berhasil untuk ${guest.name}.`;
+          renderStatusBar();
+          const msg = `Check-in langsung berhasil!\nReservation ID: ${res.reservation.reservation_id}\nKamar: ${room.room_number}\nCheck-Out: ${Utility.formatDate(res.reservation.checkout_date)}`;
+          alert(msg);
+
+          const resultBox = document.getElementById("walkinRoomResult");
+          resultBox.innerHTML = `
+            <div class="card" style="margin-top:18px;">
+              <h3>Check-In Langsung Berhasil</h3>
+              <div>Reservation ID: <strong>${res.reservation.reservation_id}</strong></div>
+              <div>Nama: ${guest.name}</div>
+              <div>Kamar: ${room.room_number}</div>
+            </div>
+          `;
+        });
+      }
+
+      const checkoutForm = document.getElementById("checkoutForm");
+      if (checkoutForm) {
+        checkoutForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const reservationId = document.getElementById("checkoutReservationId").value.trim().toUpperCase();
+          const reservation = state.reservation_manager.getReservation(reservationId);
+          if (!reservation) {
+            state.statusText = "Reservasi tidak ditemukan.";
+            renderStatusBar();
+            alert("Reservasi tidak ditemukan.");
+            return;
+          }
+          if (reservation.status !== ReservationStatus.CHECKED_IN) {
+            state.statusText = `Reservasi berstatus ${reservation.status}, tidak dapat check-out.`;
+            renderStatusBar();
+            alert(`Reservasi berstatus ${reservation.status}, tidak dapat check-out.`);
+            return;
+          }
+
+          const result = state.checkout_manager.processCheckout(reservation);
+          if (result.late_hours === null) {
+            state.statusText = result.msg;
+            renderStatusBar();
+            alert(result.msg);
+            return;
+          }
+
+          const priceBreakdown = PriceManager.calculateTotal(reservation.room.room_type, reservation.nights, result.late_hours);
+          let payment = null;
+
+          if (reservation.is_paid) {
+            if (priceBreakdown.late_fee > 0) {
+              const method = prompt("Ada denda keterlambatan. Masukkan metode pembayaran: Cash, Debit Card, Credit Card, QRIS, Bank Transfer");
+              if (!method) {
+                alert("Pembayaran denda dibatalkan.");
+                return;
+              }
+              payment = state.payment_manager.processPayment(reservation, priceBreakdown.late_fee, method);
+            }
+          } else {
+            const method = prompt("Masukkan metode pembayaran: Cash, Debit Card, Credit Card, QRIS, Bank Transfer");
+            if (!method) {
+              alert("Pembayaran dibatalkan.");
+              return;
+            }
+            payment = state.payment_manager.processPayment(reservation, priceBreakdown.total, method);
+          }
+
+          const invoice = state.invoice_manager.createInvoice(reservation, payment, priceBreakdown);
+          state.lastInvoice = invoice;
+          state.statusText = `Check-out berhasil untuk ${reservation.guest.name}.`;
+          renderStatusBar();
+          renderScreen();
+        });
+      }
+
+      const prepayForm = document.getElementById("prepayForm");
+      if (prepayForm) {
+        prepayForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const reservationId = document.getElementById("prepayReservationId").value.trim().toUpperCase();
+          const reservation = state.reservation_manager.getReservation(reservationId);
+          if (!reservation) {
+            state.statusText = "Reservasi tidak ditemukan.";
+            renderStatusBar();
+            alert("Reservasi tidak ditemukan.");
+            return;
+          }
+          if (reservation.status !== ReservationStatus.CHECKED_IN) {
+            state.statusText = `Reservasi berstatus ${reservation.status}. Prabayar hanya berlaku untuk tamu yang sudah check-in.`;
+            renderStatusBar();
+            alert(`Reservasi berstatus ${reservation.status}. Prabayar hanya berlaku untuk tamu yang sudah check-in.`);
+            return;
+          }
+          if (reservation.is_paid) {
+            state.statusText = "Reservasi ini sudah lunas sebelumnya.";
+            renderStatusBar();
+            alert("Reservasi ini sudah lunas sebelumnya.");
+            return;
+          }
+
+          const breakdown = PriceManager.calculateTotal(reservation.room.room_type, reservation.nights);
+          const proceed = confirm(`Total yang harus dibayar: ${Utility.formatRupiah(breakdown.total)}. Lanjutkan pembayaran sekarang?`);
+          if (!proceed) {
+            state.statusText = "Pembayaran prabayar dibatalkan.";
+            renderStatusBar();
+            return;
+          }
+
+          const method = prompt("Masukkan metode pembayaran: Cash, Debit Card, Credit Card, QRIS, Bank Transfer");
+          if (!method) {
+            alert("Pembayaran dibatalkan.");
+            return;
+          }
+          state.payment_manager.processPayment(reservation, breakdown.total, method);
+          reservation.mark_paid();
+          state.statusText = `Pembayaran prabayar berhasil untuk ${reservation.guest.name}.`;
+          renderStatusBar();
+          alert("Pembayaran berhasil.");
+        });
+      }
+
+      const staffForm = document.getElementById("staffForm");
+      if (staffForm) {
+        staffForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const name = document.getElementById("staffName").value.trim();
+          const role = document.getElementById("staffRole").value;
+
+          if (!name) {
+            state.statusText = "Nama staff tidak boleh kosong.";
+            renderStatusBar();
+            return;
+          }
+
+          const staff = state.staff_manager.addStaff(name, role);
+          state.statusText = `Staff berhasil ditambahkan: ${staff.name}.`;
+          renderStatusBar();
+          renderScreen();
+        });
+      }
+    }
+
+    initSystem();
+  </script>
+</body>
+</html>
